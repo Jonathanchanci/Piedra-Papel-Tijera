@@ -4,5 +4,6 @@ namespace Piedra_Papel_Tijera.Repository
 {
     public class BatallaRepository: Repository<Batalla>
     {
+
     }
 }

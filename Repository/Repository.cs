@@ -8,7 +8,7 @@ namespace Piedra_Papel_Tijera.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly GamePPTContext _context = new();
+        protected readonly GamePPTContext _context = new();
         public async Task<T> Create(T entity)
         {
             _context.Add(entity);
@@ -40,6 +40,21 @@ namespace Piedra_Papel_Tijera.Repository
         public async Task<bool> Update(T entiry)
         {
             _context.Entry(entiry).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateRange(IEnumerable<T> entitys)
+        {
+            _context.UpdateRange(entitys);
 
             try
             {

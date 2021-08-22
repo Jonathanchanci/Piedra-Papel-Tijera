@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Piedra_Papel_Tijera.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,10 +40,34 @@ namespace Piedra_Papel_Tijera.Negocio
                 return resultValidation;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }            
+        }
+
+        public static ResultValidation ValidarRegistrarMovimiento(int idJugador, int idMovimiento)
+        {
+            try
+            {
+                ResultValidation resultValidation = new ResultValidation()
+                {
+                    EventoValidado = "RegistrarMovimiento"
+                };
+                //Validar si existe el jugador
+                if(new JugadorRepository().GetById(idJugador).Result == null)
+                    resultValidation.Mensaje += $" -El  jugador con ID {idJugador} no existe";
+                //Validar si existe el movimiento
+                if (new MovimientoRepository().GetById(idMovimiento).Result == null)
+                    resultValidation.Mensaje += $" -El  Movimiento con ID {idMovimiento} no existe";
+
+                resultValidation.Resultado = string.IsNullOrEmpty(resultValidation.Mensaje);
+                return resultValidation;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

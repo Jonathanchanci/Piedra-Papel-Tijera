@@ -12,5 +12,6 @@ namespace Piedra_Papel_Tijera.Interface
         Task<T> Create(T entity);
         Task<bool> Update(T entiry);
         Task<bool> Delete(int id);
+        Task<bool> UpdateRange(IEnumerable<T> entitys);
     }
 }

@@ -24,7 +24,7 @@ namespace Piedra_Papel_Tijera.Models
         public virtual DbSet<Movimiento> Movimientos { get; set; }
         public virtual DbSet<ResultadoBatallaRondum> ResultadoBatallaRonda { get; set; }
         public virtual DbSet<Rondum> Ronda { get; set; }
-        public virtual DbSet<Turno> Turnos { get; set; }
+        //public virtual DbSet<Turno> Turnos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -107,6 +107,8 @@ namespace Piedra_Papel_Tijera.Models
 
                 entity.Property(e => e.FkIdRonda).HasColumnName("FK_ID_Ronda");
 
+                entity.Property(e => e.FkIdMovimiento).HasColumnName("FK_ID_Movimiento");
+
                 entity.HasOne(d => d.FkIdJugadorBatallaNavigation)
                     .WithMany(p => p.JugadorBatallaRonda)
                     .HasForeignKey(d => d.FkIdJugadorBatalla)
@@ -123,6 +125,12 @@ namespace Piedra_Papel_Tijera.Models
                     .HasForeignKey(d => d.FkIdRonda)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__JugadorBa__FK_ID__44FF419A");
+
+                entity.HasOne(d => d.FkIdMovimientoNavigation)
+                    .WithMany(p => p.JugadorBatallaRonda)
+                    .HasForeignKey(d => d.FkIdMovimiento)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__JugadorBa_FK_ID__4BAC3F29");
             });
 
             modelBuilder.Entity<Movimiento>(entity =>
@@ -155,33 +163,7 @@ namespace Piedra_Papel_Tijera.Models
                 entity.Property(e => e.IdRonda).HasColumnName("ID_Ronda");
 
                 entity.Property(e => e.Nombre).HasMaxLength(200);
-            });
-
-            modelBuilder.Entity<Turno>(entity =>
-            {
-                entity.HasKey(e => e.IdTurno)
-                    .HasName("PK__Turno__9FCE7EC7AC8269F1");
-
-                entity.ToTable("Turno");
-
-                entity.Property(e => e.IdTurno).HasColumnName("ID_Turno");
-
-                entity.Property(e => e.FkIdJugadorBatallaRonda).HasColumnName("FK_ID_JugadorBatallaRonda");
-
-                entity.Property(e => e.FkIdMovimiento).HasColumnName("FK_ID_Movimiento");
-
-                entity.HasOne(d => d.FkIdJugadorBatallaRondaNavigation)
-                    .WithMany(p => p.Turnos)
-                    .HasForeignKey(d => d.FkIdJugadorBatallaRonda)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Turno__FK_ID_Jug__4AB81AF0");
-
-                entity.HasOne(d => d.FkIdMovimientoNavigation)
-                    .WithMany(p => p.Turnos)
-                    .HasForeignKey(d => d.FkIdMovimiento)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Turno__FK_ID_Mov__4BAC3F29");
-            });
+            });            
 
             OnModelCreatingPartial(modelBuilder);
         }

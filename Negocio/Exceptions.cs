@@ -9,6 +9,7 @@ namespace Piedra_Papel_Tijera.Models
         {
             _ex = ex;
         }
+        public string MensajeUsuario { get { return "Ocurrio un error inesperado en la operación"; }}
         public string Mensaje { get { return _ex.Message; } }
         public string MensajeEspecifico { 
             get 
