@@ -24,5 +24,14 @@ namespace Piedra_Papel_Tijera.Repository
         {
             return _context.JugadorBatallaRonda.Where(jbr => jbr.FkIdJugadorBatallaNavigation.FkIdBatalla == idBatalla).ToList();
         }
+
+        public List<JugadorBatallaRondum> GetResultadoParcialByBatalla(int idBatalla, int idGanador, int idEmpate)
+        {
+            return _context.JugadorBatallaRonda
+                .Include(r => r.FkIdRondaNavigation)
+                .Include(m => m.FkIdResultadoBatallaRondaNavigation)
+                .Include(j => j.FkIdJugadorBatallaNavigation.FkIdJugadorNavigation)
+                .Where(jbr => jbr.FkIdJugadorBatallaNavigation.FkIdBatalla == idBatalla && (jbr.FkIdResultadoBatallaRonda == idGanador || jbr.FkIdResultadoBatallaRonda == idEmpate)).ToList();
+        }
     }
 }

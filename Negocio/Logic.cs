@@ -9,7 +9,7 @@ namespace Piedra_Papel_Tijera.Negocio
 {
     public static class Logic
     {
-        public static async Task<List<Jugador>> IniciarBatallaAsync(string[] jugadores)
+        public static async Task<Batalla> IniciarBatallaAsync(string[] jugadores)
         {
             try
             {
@@ -37,7 +37,8 @@ namespace Piedra_Papel_Tijera.Negocio
                     };
                     jugadorBatallaList.Add(await new JugadorBatallaRepository().Create(jb));
                 }
-                return jugadoresList;
+                batalla.JugadorBatallas = jugadorBatallaList;
+                return batalla;
             }
             catch (Exception)
             {
@@ -193,6 +194,9 @@ namespace Piedra_Papel_Tijera.Negocio
                 
                 if (jugadorGanador.IdJugadorBatalla != 0)
                 {
+                    Batalla batalla = await new BatallaRepository().GetById(idBatalla);
+                    batalla.FechaFin = DateTime.Now;
+                    var guardoB = await new BatallaRepository().Update(batalla);
                     jugadorGanador.Gadador = true;
                     var guardo = await new JugadorBatallaRepository().Update(jugadorGanador);
                     foreach (var item in listjb)
@@ -212,5 +216,83 @@ namespace Piedra_Papel_Tijera.Negocio
                 throw;
             }
         } 
+
+        public static async Task<List<ResultadoParcial>> ResultadoParcial(int idBatalla)
+        {
+            try
+            {
+                List<ResultadoParcial> resultadoParcial = new();
+                const string empate = "EMPATE";
+                const string ganador = "GANADOR";
+                var resultList = await new ResultadoBatallaRondaRepository().Getlist();
+                int idEmpate = resultList.Where(x => x.Nombre == empate).FirstOrDefault().IdResultadoBatallaRonda;
+                int idGanador = resultList.Where(x => x.Nombre == ganador).FirstOrDefault().IdResultadoBatallaRonda;
+                List<JugadorBatallaRondum> jblList = new JugadorBatallaRondaRepository().GetResultadoParcialByBatalla(idBatalla, idGanador, idEmpate);
+                foreach (var jbr in jblList)
+                {
+                    ResultadoParcial rp = new()
+                    {
+                        IdRonda = jbr.FkIdRonda,
+                        NombreRonda = jbr.FkIdRondaNavigation.Nombre,
+                        NombreJugador = jbr.FkIdJugadorBatallaNavigation.FkIdJugadorNavigation.Nombre,
+                        Resultado = jbr.FkIdResultadoBatallaRondaNavigation.Nombre
+                    };
+                    resultadoParcial.Add(rp);
+                }
+                //Quitar empates dobles
+                foreach (var rp in resultadoParcial)                
+                    if (rp.Resultado == empate) rp.NombreJugador = empate;                
+
+                List<int> idRondas = resultadoParcial.Where(r => r.Resultado == empate).Select(z => z.IdRonda).ToList();
+                idRondas = idRondas.Distinct().ToList();
+                foreach (var item in idRondas)
+                {
+                    resultadoParcial.Remove(resultadoParcial.Where(b => b.IdRonda == item).First());
+                }
+
+                return resultadoParcial;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static async Task<Batalla> IniciarBatallaRevancha(int[] jugadores)
+        {
+            try
+            {
+                string nombreBatalla = string.Empty;
+                List<Jugador> jugadoresList = new();
+                Batalla batalla = new();
+                List<JugadorBatalla> jugadorBatallaList = new();
+                int cont = 0;
+
+                foreach (int idJugador in jugadores)
+                {
+                    cont++;
+                    var jugador = await new JugadorRepository().GetById(idJugador);
+                    jugadoresList.Add(jugador);
+                    nombreBatalla += jugador.Nombre + (cont == jugadores.Length ? "" : " VS ");
+                }
+                batalla.Nombre = nombreBatalla + " Revancha";
+                batalla = await new BatallaRepository().Create(batalla);
+                foreach (Jugador jugador in jugadoresList)
+                {
+                    JugadorBatalla jb = new()
+                    {
+                        FkIdBatalla = batalla.IdBatalla,
+                        FkIdJugador = jugador.IdJugador,
+                    };
+                    jugadorBatallaList.Add(await new JugadorBatallaRepository().Create(jb));
+                }
+                batalla.JugadorBatallas = jugadorBatallaList;
+                return batalla;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

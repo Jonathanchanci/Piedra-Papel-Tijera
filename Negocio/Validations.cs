@@ -69,5 +69,50 @@ namespace Piedra_Papel_Tijera.Negocio
                 throw;
             }
         }
+
+        public static ResultValidation ValidarExisteBatalla(int idBatalla)
+        {
+            try
+            {
+                ResultValidation resultValidation = new ResultValidation()
+                {
+                    EventoValidado = "ResultadoParcial"
+                };
+                if(new BatallaRepository().GetById(idBatalla).Result == null)
+                    resultValidation.Mensaje += $" -La batalla con ID {idBatalla} no existe";
+
+                resultValidation.Resultado = string.IsNullOrEmpty(resultValidation.Mensaje);
+                return resultValidation;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static ResultValidation ValidarIniciarRevancha(int[] jugadores)
+        {
+            try
+            {
+                ResultValidation resultValidation = new ResultValidation()
+                {
+                    EventoValidado = "IniciarRevancha"
+                };
+                //Validar jugadores existen
+                foreach (var item in jugadores)
+                {
+                    if(new JugadorRepository().GetById(item) == null)
+                        resultValidation.Mensaje += $" -El jugador con ID {item} no existe";
+                }
+
+                resultValidation.Resultado = string.IsNullOrEmpty(resultValidation.Mensaje);
+                return resultValidation;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
