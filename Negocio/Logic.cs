@@ -35,7 +35,7 @@ namespace Piedra_Papel_Tijera.Negocio
                         FkIdBatalla = batalla.IdBatalla,
                         FkIdJugador = jugador.IdJugador,
                     };
-                    jugadorBatallaList.Add(await new JugadorBatallaRepository().Create(jb));
+                    jugadorBatallaList.Add(await new JugadorBatallaRepository().Create(jb));                    
                 }
                 batalla.JugadorBatallas = jugadorBatallaList;
                 return batalla;
