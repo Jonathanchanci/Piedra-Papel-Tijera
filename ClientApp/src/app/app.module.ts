@@ -35,7 +35,7 @@ import { GanadorComponent } from './pages/ganador/ganador.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'iniciar-batalla', component: IniciarBatallaComponent},
-      { path: 'movimiento', component: MovimientoComponent },
+      { path: 'movimiento/:idBat/:jug1/:jug2', component: MovimientoComponent },
       { path: 'resultado-parcial', component: ResultadoParcialComponent},
       { path: 'ganador', component: GanadorComponent },
     ])

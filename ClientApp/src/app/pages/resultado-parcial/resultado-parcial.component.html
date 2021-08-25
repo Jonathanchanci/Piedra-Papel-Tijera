@@ -1,20 +1,22 @@
-
-<h3 class="text-center">Resultado Parcial</h3>
-<div class="table-responsive">
-  <table class="table table-sm table-striped">
-    <thead>
-      <tr >
-        <th scope="col">ID Ronda</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Ganador</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of resultadoParcial">
-        <th scope="row">{{item.idRonda}}</th>
-        <td>{{item.nombreRonda}}</td>
-        <td>{{item.nombreJugador}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div *ngIf="resultadoParcial.length > 0">
+  <h3 class="text-center">Resultado Parcial</h3>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID Ronda</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Ganador</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of resultadoParcial">
+          <th scope="row">{{item.idRonda}}</th>
+          <td>{{item.nombreRonda}}</td>
+          <td>{{item.nombreJugador}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+

@@ -32,7 +32,7 @@ namespace Piedra_Papel_Tijera.Negocio
                     //Validar logitud de nombres
                     for (int i = 0; i < jugadores.Length ; i++)
                     {
-                        if (jugadores[i].Length < 4) { resultValidation.Mensaje += $" -El nombre de jugador {jugadores[i]} es debe ser mayor a 3 caracteres"; }
+                        if (jugadores[i].Length < 4) { resultValidation.Mensaje += $" -El nombre de jugador {jugadores[i]} debe ser mayor a 3 caracteres"; }
                     }
                 }
 

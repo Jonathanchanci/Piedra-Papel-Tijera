@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ResultadoParcial } from '../../interface/resultado-parcial';
 import { GameService } from '../../services/game.service';
 
@@ -9,12 +9,12 @@ import { GameService } from '../../services/game.service';
 })
 export class ResultadoParcialComponent implements OnInit {
 
-  resultadoParcial: ResultadoParcial[] = [];
+  public resultadoParcial: ResultadoParcial[] = [];
+  @Input() idBatalla: number;
   constructor(private service: GameService) { }
 
   ngOnInit() {
-    this.service.consultarResultado(5).subscribe((resp: ResultadoParcial[]) => {
-      console.log(resp);
+    this.service.consultarResultado(this.idBatalla).subscribe((resp: ResultadoParcial[]) => {      
       this.resultadoParcial = resp;
     });
   }

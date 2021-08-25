@@ -8,10 +8,32 @@ import { ResultadoParcial } from '../interface/resultado-parcial';
 export class GameService {
 
   public resultadoParcial: ResultadoParcial[];
-  private url: "https://localhost:44314/api/Game/";
+  private URL: string = "https://localhost:44314/api/";
+  
+
   constructor(private http: HttpClient) { }
 
   consultarResultado(idBatalla: number) {
-    return this.http.get("https://localhost:44314/api/Game/Resultadoparcial/"+idBatalla);
+    return this.http.get(`${this.URL}Game/Resultadoparcial/${idBatalla}`);
+  }
+
+  IniciarBatalla(jugadores: string[]) {
+    return this.http.post(`${this.URL}Game/IniciarBatalla`, jugadores);
+  }
+
+  RegistrarMovimiento(idJugador: number, idMovimiento: number) {
+    return this.http.get(`${this.URL}Game/RegistrarMovimiento/${idJugador}/${idMovimiento}`);
+  }
+
+  GetBatallaById(idBatalla: number) {
+    return this.http.get(`${this.URL}Batalla/${idBatalla}`);
+  }
+
+  GetJugadorById(idJugador: number) {
+    return this.http.get(`${this.URL}Jugador/${idJugador}`);
+  }
+
+  consultarMovimientos() {
+    return this.http.get(`${this.URL}movimiento`)
   }
 }
