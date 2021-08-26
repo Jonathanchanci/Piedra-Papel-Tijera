@@ -1,4 +1,5 @@
-﻿using Piedra_Papel_Tijera.Repository;
+﻿using Piedra_Papel_Tijera.Models;
+using Piedra_Papel_Tijera.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,7 +102,8 @@ namespace Piedra_Papel_Tijera.Negocio
                 //Validar jugadores existen
                 foreach (var item in jugadores)
                 {
-                    if(new JugadorRepository().GetById(item) == null)
+                    Jugador jugador = new JugadorRepository().GetById(item).Result;
+                    if (jugador == null)
                         resultValidation.Mensaje += $" -El jugador con ID {item} no existe";
                 }
 

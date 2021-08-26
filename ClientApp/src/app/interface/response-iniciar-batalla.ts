@@ -6,9 +6,9 @@ export interface ResponseIniciarBatalla {
   fechaInicio: Date,
   fechaFin?: Date,
   jugadorBatallas: JugadorBatallas,
-  EventoValidado: string,
-  Resultado: string,
-  Mensaje: string,
+  eventoValidado: string,
+  resultado: string,
+  mensaje: string,
   MensajeUsuario: string,
   MensajeEspecifico: string,
   StackTrace: string

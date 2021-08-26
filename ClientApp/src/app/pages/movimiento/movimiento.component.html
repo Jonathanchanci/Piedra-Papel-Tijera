@@ -1,10 +1,11 @@
 <h1 class="text-center text-white">{{batalla.nombre}}</h1>
 <div class="card p-3">
   <div class="card-header text-center bg-transparent">
-    <h2>Ronda 1</h2>
+    <h2>Ronda {{numRonda}}</h2>
   </div>
   <div class="card-body text-center">
-    <h3>{{jugadorActual.nombre}} Selecciona tu movimiento</h3>
+    <h1>{{jugadorActual.nombre}} </h1>
+    <h5>selecciona tu movimiento</h5>
     <div class="mx-auto">
       <button type="button" class="btn btn-lg m-2 btn-outline-light" (click)="MovimientoPiedra()">
         <img src="../../../assets/images/piedra.png" class="mx-auto d-block img-fluid" />
@@ -18,7 +19,7 @@
     </div>
   </div>
   <div>
-    <app-resultado-parcial idBatalla="{{idBatalla}}"></app-resultado-parcial>
+    <app-resultado-parcial [idBatalla]="idBatalla" (numRondas)="UpdateRondas($event)"></app-resultado-parcial>
   </div>
   <div class="card-footer p-0 pl-1 pr-1">
     <small class="text-muted">ID Batalla: {{idBatalla}}</small>

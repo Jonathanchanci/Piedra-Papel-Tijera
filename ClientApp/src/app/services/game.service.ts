@@ -36,4 +36,8 @@ export class GameService {
   consultarMovimientos() {
     return this.http.get(`${this.URL}movimiento`)
   }
+
+  IniciarRevancha(jugadores: number[]) {
+    return this.http.post(`${this.URL}Game/IniciarRevancha`, jugadores);
+  }
 }
