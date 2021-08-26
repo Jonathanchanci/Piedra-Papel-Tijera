@@ -40,4 +40,8 @@ export class GameService {
   IniciarRevancha(jugadores: number[]) {
     return this.http.post(`${this.URL}Game/IniciarRevancha`, jugadores);
   }
+
+  GetListBatallas() {
+    return this.http.get(`${this.URL}Batalla`);
+  }
 }

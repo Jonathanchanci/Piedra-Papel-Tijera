@@ -11,6 +11,7 @@ import { MovimientoComponent } from './pages/movimiento/movimiento.component';
 import { ResultadoParcialComponent } from './pages/resultado-parcial/resultado-parcial.component';
 import { GanadorComponent } from './pages/ganador/ganador.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { BatallasComponent } from './pages/batallas/batallas.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
     MovimientoComponent,
     ResultadoParcialComponent,
     GanadorComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BatallasComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,6 +34,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
       { path: 'movimiento/:idBat/:jug1/:jug2', component: MovimientoComponent },
       { path: 'resultado-parcial', component: ResultadoParcialComponent},
       { path: 'ganador/:idBat/:ganador/:perdedor', component: GanadorComponent },
+      { path: 'batallas', component: BatallasComponent},
       { path: "**", pathMatch: "full", component: NotFoundComponent }
     ])
   ],

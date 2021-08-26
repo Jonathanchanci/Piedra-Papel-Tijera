@@ -19,6 +19,15 @@ namespace Piedra_Papel_Tijera.Controllers
             return battle.ToList();
         }
 
+        // GET: api/Batallas
+        [HttpGet]
+        [Route("ListaCompleta")]
+        public async Task<ActionResult<IEnumerable<Batalla>>> GetCompleteBatallas()
+        {
+            var battle = new BatallaRepository().GetListCompleteBatalla();
+            return battle.ToList();
+        }
+
         // GET: api/Batallas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Batalla>> GetBatalla(int id)
